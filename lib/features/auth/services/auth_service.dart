@@ -11,10 +11,6 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sportx/providers/user_provider.dart';
 
-Map<String, String> headers = {
-  'Content-Type': 'application/json',
-};
-
 class AuthService {
   //sign up user
   void signUpUser({
@@ -37,7 +33,9 @@ class AuthService {
       http.Response res = await http.post(
         Uri.parse('$uri/api/signup'),
         body: jsonEncode(user.toJson()),
-        headers: headers,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
       );
 
       httpErrorHandle(
@@ -66,7 +64,9 @@ class AuthService {
           'email': email,
           'password': password,
         }),
-        headers: headers,
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
       );
 
       httpErrorHandle(
@@ -83,7 +83,45 @@ class AuthService {
           );
         },
       );
-      print(res.body);
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  // get uder data
+  void getUserData(
+    BuildContext context,
+  ) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
+
+      if (token == null) {
+        prefs.setString('x-auth-token', '');
+        token = '';
+      }
+
+      var tokenRes = await http.post(
+        Uri.parse('$uri/tokenIsValid'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'x-auth-token': token,
+        },
+      );
+
+      var response = jsonDecode(tokenRes.body);
+
+      if (response == true) {
+        http.Response userRes = await http.get(
+          Uri.parse('$uri/'),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'x-auth-token': token,
+          },
+        );
+
+        Provider.of<UserProvider>(context, listen: false).setUser(userRes.body);
+      }
     } catch (e) {
       showSnackBar(context, e.toString());
     }
