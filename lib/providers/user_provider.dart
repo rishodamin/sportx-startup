@@ -19,5 +19,6 @@ class UserProvider extends ChangeNotifier {
   void setUser(String user) {
     Map<String, dynamic> userMap = jsonDecode(user);
     _user = User.fromJson(userMap);
+    notifyListeners();
   }
 }

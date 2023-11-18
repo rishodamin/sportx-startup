@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sportx/common/widgets/bottom_bar.dart';
 import 'package:sportx/constants/error_handling.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/constants/utils.dart';
@@ -78,7 +79,7 @@ class AuthService {
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
           Navigator.pushNamedAndRemoveUntil(
             context,
-            HomeScreen.routeName,
+            BottomBar.routeName,
             (route) => false,
           );
         },
