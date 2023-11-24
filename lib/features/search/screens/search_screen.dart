@@ -1,25 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:sportx/common/widgets/loader.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/home/widgets/address_box.dart';
-import 'package:sportx/features/home/widgets/carousel_image.dart';
-import 'package:sportx/features/home/widgets/deal_of_the_day.dart';
-import 'package:sportx/features/home/widgets/top_categories.dart';
-import 'package:sportx/features/search/screens/search_screen.dart';
+import 'package:sportx/features/product_details/screens/product_details_screen.dart';
+import 'package:sportx/features/search/services/search_services.dart';
+import 'package:sportx/features/search/widget/searched_product.dart';
+import 'package:sportx/models/product.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String routeName = '/home';
-  const HomeScreen({super.key});
+class SearchScreen extends StatefulWidget {
+  static const String routeName = '/search-screen';
+  final String searchQuery;
+  const SearchScreen({
+    super.key,
+    required this.searchQuery,
+  });
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SearchScreenState extends State<SearchScreen> {
+  List<Product>? products;
+  final SearchServices searchServices = SearchServices();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSearchedProduct();
+  }
+
+  fetchSearchedProduct() async {
+    products = await searchServices.fetchSearchedPoducts(
+        context: context, searchQuery: widget.searchQuery);
+    setState(() {});
+  }
+
   void navigateToSearchScreen(String query) {
+    if (query != '') {
+      Navigator.pushNamed(
+        context,
+        SearchScreen.routeName,
+        arguments: query,
+      );
+    }
+  }
+
+  void navigateToProductDetailScreen(Product product) {
     Navigator.pushNamed(
       context,
-      SearchScreen.routeName,
-      arguments: query,
+      ProductDetailScreen.routeName,
+      arguments: {
+        'product': product,
+        'searchQuery': widget.searchQuery,
+      },
     );
   }
 
@@ -50,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         side: const BorderSide(color: Colors.grey),
                       ),
                       child: TextFormField(
+                        initialValue: widget.searchQuery,
                         onFieldSubmitted: navigateToSearchScreen,
                         style: const TextStyle(fontSize: 17),
                         cursorColor: Colors.black,
@@ -82,17 +116,24 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        body: const SingleChildScrollView(
-          child: Column(
-            children: [
-              AddressBox(),
-              SizedBox(height: 10),
-              TopCategories(),
-              SizedBox(height: 10),
-              CarouselImage(),
-              DealOfTheDay(),
-            ],
-          ),
-        ));
+        body: products == null
+            ? const Loader()
+            : Column(
+                children: [
+                  const AddressBox(),
+                  const SizedBox(height: 10),
+                  Expanded(
+                      child: ListView.builder(
+                    itemCount: products!.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                          splashColor: GlobalVariables.lightGray,
+                          onTap: () =>
+                              navigateToProductDetailScreen(products![index]),
+                          child: SearchedProduct(product: products![index]));
+                    },
+                  ))
+                ],
+              ));
   }
 }

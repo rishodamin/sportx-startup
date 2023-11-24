@@ -7,6 +7,9 @@ const router = express.Router();
 
 //import from other files
 const authRouter = require('./routes/auth');
+const adminRouter = require('./routes/admin');
+const productRouter = require('./routes/product');
+const userRouter = require('./routes/user');
 
 //init
 const app = express();
@@ -16,6 +19,9 @@ const DB = "mongodb+srv://daminrisho:Legendary123@cluster0.9yj6tbk.mongodb.net/?
 //middleware
 app.use(express.json());
 app.use(authRouter);
+app.use(adminRouter);
+app.use(productRouter);
+app.use(userRouter);
 
 //coneections
 mongoose.connect(DB).then(()=>{

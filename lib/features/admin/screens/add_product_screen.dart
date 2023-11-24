@@ -7,6 +7,7 @@ import 'package:sportx/common/widgets/custom_button.dart';
 import 'package:sportx/common/widgets/custom_textfield.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/constants/utils.dart';
+import 'package:sportx/features/admin/services/admin_services.dart';
 
 class AddProductScreen extends StatefulWidget {
   static const String routeName = '/add-product';
@@ -21,6 +22,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
+  final AdminServices adminServices = AdminServices();
 
   @override
   void dispose() {
@@ -38,8 +40,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'Books',
     'Fashion',
   ];
+
+  void sellProduct() {
+    if (images.isEmpty) {
+      showSnackBar(context, 'Select images for the product');
+      return;
+    }
+    if (_addProductFormKey.currentState!.validate()) {
+      showSnackBar(context, 'Validating...');
+      adminServices.sellProduct(
+        context: context,
+        name: _productNameController.text,
+        description: _descriptionController.text,
+        price: double.parse(_priceController.text),
+        quantity: double.parse(_quantityController.text),
+        category: category,
+        images: images,
+      );
+    } else {
+      showSnackBar(context, 'Validation failed');
+    }
+  }
+
   String category = 'Mobiles';
   List<File> images = [];
+  final _addProductFormKey = GlobalKey<FormState>();
 
   void selectImages() async {
     var res = await pickImages();
@@ -70,6 +95,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       body: SingleChildScrollView(
         child: Form(
+          key: _addProductFormKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
@@ -162,7 +188,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 const SizedBox(height: 10),
                 CustomButton(
                   text: 'Sell',
-                  onTap: () {},
+                  onTap: sellProduct,
                 ),
                 const SizedBox(height: 10),
               ],

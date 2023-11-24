@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:sportx/features/account/screens/account_screen.dart';
 import 'package:sportx/features/home/screens/home_screen.dart';
+import 'package:sportx/providers/user_provider.dart';
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
@@ -31,6 +33,7 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    var userCartLen = Provider.of<UserProvider>(context).user.cart.length;
     return Scaffold(
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
@@ -96,9 +99,9 @@ class _BottomBarState extends State<BottomBar> {
                     badgeColor: Colors.white,
                     elevation: 0,
                     padding: EdgeInsets.only(right: 13, top: 3)),
-                badgeContent: const Text(
-                  '2',
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                badgeContent: Text(
+                  userCartLen.toString(),
+                  style: const TextStyle(fontWeight: FontWeight.w500),
                 ),
                 child: const Icon(Icons.shopping_cart_outlined),
               ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:sportx/models/cart.dart';
 import 'package:sportx/models/user.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -12,6 +13,7 @@ class UserProvider extends ChangeNotifier {
     type: '',
     token: '',
     email: '',
+    cart: [],
   );
 
   User get user => _user;
@@ -19,6 +21,11 @@ class UserProvider extends ChangeNotifier {
   void setUser(String user) {
     Map<String, dynamic> userMap = jsonDecode(user);
     _user = User.fromJson(userMap);
+    notifyListeners();
+  }
+
+  void updateCart(List<Cart> cart) {
+    _user.cart = cart;
     notifyListeners();
   }
 }

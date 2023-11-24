@@ -19,6 +19,7 @@ class CustomText extends StatelessWidget {
       cursorColor: Colors.black,
       controller: controller,
       decoration: InputDecoration(
+        // floatingLabelStyle: TextStyle(),
         hintText: hintText,
         border: const OutlineInputBorder(
           borderSide: BorderSide(
