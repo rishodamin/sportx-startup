@@ -8,7 +8,6 @@ import 'package:sportx/features/home/screens/home_screen.dart';
 import 'package:sportx/features/order_details/screens/order_details.dart';
 import 'package:sportx/features/product_details/screens/product_details_screen.dart';
 import 'package:sportx/features/search/screens/search_screen.dart';
-import 'package:sportx/models/product_models/product.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {

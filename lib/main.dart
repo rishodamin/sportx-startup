@@ -5,7 +5,6 @@ import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/admin/screens/admin_screen.dart';
 import 'package:sportx/features/auth/screens/auth_screen.dart';
 import 'package:sportx/features/auth/services/auth_service.dart';
-import 'package:sportx/features/home/screens/home_screen.dart';
 import 'package:sportx/providers/user_provider.dart';
 import 'package:sportx/router.dart';
 

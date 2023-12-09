@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sportx/common/widgets/custom_button.dart';
 import 'package:sportx/providers/user_provider.dart';
 
 class CartSubtotal extends StatelessWidget {
