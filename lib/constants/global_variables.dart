@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-String uri = 'http://192.168.53.41:3000'; //mine-53//mom-210//rido-211
+String uri = "https://remise.up.railway.app";
+//'http://192.168.53.41:3000'; //mine-53//mom-210//rido-211
 
 class GlobalVariables {
   // COLORS
