@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sportx/common/widgets/stars.dart';
-import 'package:sportx/models/product.dart';
+import 'package:sportx/models/product_models/product.dart';
 
 class SearchedProduct extends StatelessWidget {
   final Product product;

@@ -36,7 +36,7 @@ productRouter.get('/api/deal-of-the-day', auth, async (req, res)=>{
         }
 
         var date = new Date().getDate();
-        var index = (date*777)%products.length; // here 777 is a seed number
+        var index = (date*7)%products.length; // here 7 is a seed number
         return res.json(products[index]);
         
     } catch (e){

@@ -10,55 +10,19 @@ import 'package:sportx/models/product_models/cart.dart';
 import 'package:sportx/models/product_models/product.dart';
 import 'package:sportx/providers/user_provider.dart';
 
-class ProductDetailsServices {
-  void rateProduct({
+class CartServices {
+  void removeFromCart({
     required BuildContext context,
     required Product product,
-    required double rating,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
       http.Response res = await http.post(
-        Uri.parse('$uri/api/rate-product'),
+        Uri.parse('$uri/api/remove-from-cart/${product.id}'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'x-auth-token': userProvider.user.token,
         },
-        body: jsonEncode(
-          {
-            'id': product.id,
-            'rating': rating,
-          },
-        ),
-      );
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {},
-      );
-    } catch (e) {
-      showSnackBar(context, e.toString());
-    }
-  }
-
-  void addToCart({
-    required BuildContext context,
-    required Product product,
-    bool showMessage = true,
-  }) async {
-    final userProvider = Provider.of<UserProvider>(context, listen: false);
-    try {
-      http.Response res = await http.post(
-        Uri.parse('$uri/api/add-to-cart'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'x-auth-token': userProvider.user.token,
-        },
-        body: jsonEncode(
-          {
-            'id': product.id,
-          },
-        ),
       );
       //  print(res.body);
       //   return;
@@ -70,9 +34,6 @@ class ProductDetailsServices {
               .map((e) => Cart.fromJson(e as Map<String, dynamic>))
               .toList();
           userProvider.updateCart(cart);
-          if (showMessage) {
-            showSnackBar(context, 'Added to Cart successfuly');
-          }
         },
       );
     } catch (e) {

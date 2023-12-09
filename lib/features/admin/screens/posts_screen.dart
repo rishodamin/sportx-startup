@@ -4,7 +4,7 @@ import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/account/widgets/single_product.dart';
 import 'package:sportx/features/admin/screens/add_product_screen.dart';
 import 'package:sportx/features/admin/services/admin_services.dart';
-import 'package:sportx/models/product.dart';
+import 'package:sportx/models/product_models/product.dart';
 
 class PostsScreen extends StatefulWidget {
   const PostsScreen({super.key});

@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
       title: 'SportX',
       theme: ThemeData(
         colorScheme: const ColorScheme.light(
-          primary: Colors.white,
+          primary: GlobalVariables.secondaryColor,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sportx/constants/error_handling.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/constants/utils.dart';
-import 'package:sportx/models/product.dart';
+import 'package:sportx/models/product_models/product.dart';
 import 'package:sportx/providers/user_provider.dart';
 
 class HomeServices {

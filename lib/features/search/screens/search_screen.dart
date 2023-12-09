@@ -5,7 +5,7 @@ import 'package:sportx/features/home/widgets/address_box.dart';
 import 'package:sportx/features/product_details/screens/product_details_screen.dart';
 import 'package:sportx/features/search/services/search_services.dart';
 import 'package:sportx/features/search/widget/searched_product.dart';
-import 'package:sportx/models/product.dart';
+import 'package:sportx/models/product_models/product.dart';
 
 class SearchScreen extends StatefulWidget {
   static const String routeName = '/search-screen';

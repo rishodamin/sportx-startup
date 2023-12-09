@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:sportx/models/rating.dart';
+import 'package:sportx/models/user_models/rating.dart';
 
 part 'product.g.dart';
 

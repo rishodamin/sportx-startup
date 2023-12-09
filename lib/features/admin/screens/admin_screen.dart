@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sportx/constants/global_variables.dart';
+import 'package:sportx/features/admin/screens/analytics_screen.dart';
+import 'package:sportx/features/admin/screens/orders_screen.dart';
 import 'package:sportx/features/admin/screens/posts_screen.dart';
 
 class AdminScreen extends StatefulWidget {
@@ -16,8 +18,8 @@ class _AdminScreenState extends State<AdminScreen> {
 
   List<Widget> pages = [
     const PostsScreen(),
-    const Center(child: Text('Analytics page')),
-    const Center(child: Text('Orders Page')),
+    const AnalyticsScreen(),
+    const OrdersScreen(),
   ];
 
   void updatePage(int page) {

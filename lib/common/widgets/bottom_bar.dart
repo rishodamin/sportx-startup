@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:sportx/features/account/screens/account_screen.dart';
+import 'package:sportx/features/cart/screens/cart_screen.dart';
 import 'package:sportx/features/home/screens/home_screen.dart';
 import 'package:sportx/providers/user_provider.dart';
 
@@ -22,7 +23,7 @@ class _BottomBarState extends State<BottomBar> {
   List<Widget> pages = [
     const HomeScreen(),
     const AccountScreen(),
-    const Center(child: Text('Cart Page')),
+    const CartScreen(),
   ];
 
   void updatePage(int page) {

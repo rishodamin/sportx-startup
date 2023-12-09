@@ -38,9 +38,12 @@ dependencies:
     sdk: flutter
   flutter_rating_bar: ^4.0.1
   http: ^1.1.0
+  intl: ^0.18.1
   json_annotation: ^4.8.0
+  pay: ^1.1.2
   provider: ^6.1.1
   shared_preferences: ^2.2.2
+  syncfusion_flutter_charts: ^23.2.7
 
 dev_dependencies:
   build_runner: ^2.3.3
@@ -61,6 +64,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/applepay.json
+    - assets/gpay.json
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

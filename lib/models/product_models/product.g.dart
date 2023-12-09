@@ -1,4 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
+
 part of 'product.dart';
 
 // **************************************************************************
@@ -14,7 +15,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       category: json['category'] as String,
       price: (json['price'] as num).toDouble(),
       id: json['_id'] as String?,
-      rating: (json['ratings'] as List<dynamic>?)
+      rating: (json['rating'] as List<dynamic>?)
           ?.map((e) => Rating.fromJson(e as Map<String, dynamic>))
           .toList(),
     );

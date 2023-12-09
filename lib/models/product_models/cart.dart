@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:sportx/models/product.dart';
+import 'package:sportx/models/product_models/product.dart';
 
 part 'cart.g.dart';
 

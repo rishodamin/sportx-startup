@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sportx/common/widgets/loader.dart';
 import 'package:sportx/features/home/services/home_services.dart';
 import 'package:sportx/features/product_details/screens/product_details_screen.dart';
-import 'package:sportx/models/product.dart';
+import 'package:sportx/models/product_models/product.dart';
 
 class DealOfTheDay extends StatefulWidget {
   const DealOfTheDay({super.key});

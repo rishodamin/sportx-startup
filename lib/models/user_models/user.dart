@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:sportx/models/cart.dart';
+import 'package:sportx/models/product_models/cart.dart';
 
 part 'user.g.dart';
 
@@ -9,9 +9,9 @@ class User {
   final String name;
   final String email;
   final String password;
-  final String address;
   final String type;
   final String token;
+  String address;
   List<Cart> cart;
 
   User({

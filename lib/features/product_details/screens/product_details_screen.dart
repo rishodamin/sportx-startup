@@ -7,7 +7,7 @@ import 'package:sportx/common/widgets/stars.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/product_details/services/product_details_services.dart';
 import 'package:sportx/features/search/screens/search_screen.dart';
-import 'package:sportx/models/product.dart';
+import 'package:sportx/models/product_models/product.dart';
 import 'package:sportx/providers/user_provider.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -31,11 +31,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   double myRating = 0;
 
   void navigateToSearchScreen(String query) {
-    Navigator.pushNamed(
-      context,
-      SearchScreen.routeName,
-      arguments: query,
-    );
+    if (query != '') {
+      Navigator.pushNamed(
+        context,
+        SearchScreen.routeName,
+        arguments: query,
+      );
+    }
   }
 
   void updateRatings() {
