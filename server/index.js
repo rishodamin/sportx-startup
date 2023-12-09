@@ -36,6 +36,6 @@ app.get("/messages", (req, res) => {
     res.send("Hello");
  });
 
-app.listen(PORT, '0.0.0.0', ()=>{
+app.listen(process.env.PORT||PORT, '0.0.0.0', ()=>{
     console.log(`Connected at port ${PORT}`);
 });
