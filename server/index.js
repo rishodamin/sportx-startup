@@ -13,7 +13,7 @@ const userRouter = require('./routes/user');
 
 //init
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT||3000;
 const DB = "mongodb+srv://daminrisho:Legendary123@cluster0.9yj6tbk.mongodb.net/?retryWrites=true&w=majority"
 
 //middleware
@@ -36,6 +36,6 @@ app.get("/messages", (req, res) => {
     res.send("Hello");
  });
 
-app.listen(process.env.PORT||PORT, '0.0.0.0', ()=>{
+app.listen(PORT, '0.0.0.0', ()=>{
     console.log(`Connected at port ${PORT}`);
 });
