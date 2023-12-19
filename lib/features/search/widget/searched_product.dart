@@ -25,6 +25,8 @@ class SearchedProduct extends StatelessWidget {
     } else {
       avgRating = 5;
     }
+    final int offer =
+        (((product.price - product.finalPrice) / product.price) * 100).ceil();
     return Column(
       children: [
         Container(
@@ -52,23 +54,52 @@ class SearchedProduct extends StatelessWidget {
                     const SizedBox(height: 5),
                     Stars(rating: avgRating),
                     const SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Text(
+                          '₹${product.price}',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.grey,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '₹${product.finalPrice}',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
                     Text(
-                      '\$${product.price}',
+                      '$offer% off',
                       style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.green,
                       ),
                     ),
                     const Text(
                       'Elgible for FREE Shipping',
                     ),
                     const SizedBox(height: 5),
-                    const Text(
-                      'In Stock',
-                      style: TextStyle(
-                        color: Colors.teal,
-                      ),
-                    ),
+                    product.quantity > 0
+                        ? const Text(
+                            'In Stock',
+                            style: TextStyle(
+                              color: Colors.teal,
+                            ),
+                          )
+                        : const Text(
+                            'Out of StocK',
+                            style: TextStyle(
+                              color: Colors.red,
+                            ),
+                          ),
                   ],
                 ),
               )

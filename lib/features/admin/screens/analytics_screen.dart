@@ -39,7 +39,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               children: [
                 const SizedBox(height: 20),
                 Text(
-                  'Total earnings : \$$totalSales',
+                  'Total earnings : ₹$totalSales',
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

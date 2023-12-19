@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:sportx/common/widgets/custom_button.dart';
+import 'package:sportx/common/widgets/product_card.dart';
 import 'package:sportx/common/widgets/stars.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/product_details/services/product_details_services.dart';
@@ -72,6 +73,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final int offer = (((widget.product.price - widget.product.finalPrice) /
+                widget.product.price) *
+            100)
+        .ceil();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(59),
@@ -81,52 +86,40 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               gradient: GlobalVariables.appBarGradient,
             ),
           ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Container(
-                  height: 42,
-                  margin: const EdgeInsets.only(left: 15),
-                  child: Material(
-                    // borderRadius: BorderRadius.circular(7),
-                    color: Colors.white,
-                    elevation: 1,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7),
-                      side: const BorderSide(color: Colors.grey),
-                    ),
-                    child: TextFormField(
-                      initialValue: widget.searchQuery,
-                      onFieldSubmitted: navigateToSearchScreen,
-                      style: const TextStyle(fontSize: 17),
-                      cursorColor: Colors.black,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.only(top: 4),
-                        border: InputBorder.none,
-                        prefixIcon: InkWell(
-                          onTap: () {},
-                          child: const Padding(
-                            padding: EdgeInsets.only(left: 6),
-                            child: Icon(
-                              Icons.search,
-                              size: 23,
-                            ),
-                          ),
-                        ),
-                        hintText: 'Search Amazon.in',
+          title: Container(
+            width: 230,
+            height: 42,
+            margin: const EdgeInsets.only(left: 15),
+            child: Material(
+              // borderRadius: BorderRadius.circular(7),
+              color: Colors.white,
+              elevation: 1,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(7),
+                side: const BorderSide(color: Colors.grey),
+              ),
+              child: TextFormField(
+                initialValue: widget.searchQuery,
+                onFieldSubmitted: navigateToSearchScreen,
+                style: const TextStyle(fontSize: 17),
+                cursorColor: Colors.black,
+                decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.only(top: 4),
+                  border: InputBorder.none,
+                  prefixIcon: InkWell(
+                    onTap: () {},
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 6),
+                      child: Icon(
+                        Icons.search,
+                        size: 23,
                       ),
                     ),
                   ),
+                  hintText: 'Search Amazon.in',
                 ),
               ),
-              Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 10),
-                  child: const Icon(
-                    Icons.mic,
-                    size: 25,
-                  )),
-            ],
+            ),
           ),
         ),
       ),
@@ -148,49 +141,116 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              child: Text(
-                widget.product.name,
-                style: const TextStyle(
-                  fontSize: 15,
-                ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 250,
+                    child: Text(
+                      // 'This is container containing a very very long text..',
+                      widget.product.name,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      const Icon(
+                        Icons.circle,
+                        color: GlobalVariables.halfWhiteColor,
+                        size: 80,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            ' $offer%',
+                            style: const TextStyle(
+                              color: Colors.green,
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const Text(
+                            'off',
+                            style: TextStyle(
+                              color: Colors.green,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
             CarouselSlider(
               items: widget.product.images.map((i) {
                 return Builder(
-                  builder: (BuildContext context) => Image.network(
-                    i,
-                    fit: BoxFit.contain,
-                    height: 200,
-                  ),
-                );
+                    builder: (BuildContext context) => Productcard(
+                          imageUrl: i,
+                          height: 200,
+                        ));
               }).toList(),
               options: CarouselOptions(viewportFraction: 1, height: 300),
+            ),
+            Center(
+              child: Text(
+                ' · ' * widget.product.images.length,
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.grey.withOpacity(0.5),
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
             ),
             Container(
               color: Colors.black12,
               height: 5,
             ),
             Padding(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
               child: Row(
                 children: [
                   const Text(
-                    'Deal Price: ',
+                    'Remise Deal Price: ',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text(
-                    '\$${widget.product.price}',
+                    '₹${widget.product.finalPrice}',
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w500,
                       color: Colors.red,
                     ),
                   ),
+                  const SizedBox(width: 10),
+                  Text(
+                    '₹${widget.product.price}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey,
+                      decoration: TextDecoration.lineThrough,
+                    ),
+                  ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                'You are saving ₹${widget.product.price - widget.product.finalPrice} on this order',
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.green,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
             Padding(

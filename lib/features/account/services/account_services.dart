@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -46,6 +48,8 @@ class AccountServices {
 
   void logout(BuildContext context) async {
     try {
+      await GoogleSignIn().signOut();
+      await FirebaseAuth.instance.signOut();
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setString('x-auth-token', '');
       Navigator.pushNamedAndRemoveUntil(

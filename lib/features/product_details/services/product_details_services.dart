@@ -41,7 +41,7 @@ class ProductDetailsServices {
     }
   }
 
-  void addToCart({
+  Future<void> addToCart({
     required BuildContext context,
     required Product product,
     bool showMessage = true,

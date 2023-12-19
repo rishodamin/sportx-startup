@@ -13,7 +13,7 @@ class CartSubtotal extends StatelessWidget {
     ///
     double subtotal = 0;
     for (int i = 0; i < user.cart.length; i++) {
-      subtotal += user.cart[i].quantity * user.cart[i].product.price;
+      subtotal += user.cart[i].quantity * user.cart[i].product.finalPrice;
     }
 
     ///
@@ -29,7 +29,7 @@ class CartSubtotal extends StatelessWidget {
             ),
           ),
           Text(
-            '\$$subtotal',
+            '₹$subtotal',
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

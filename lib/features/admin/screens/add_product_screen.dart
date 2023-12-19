@@ -22,6 +22,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _discountPriceController =
+      TextEditingController();
   final AdminServices adminServices = AdminServices();
 
   @override
@@ -31,6 +33,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _descriptionController.dispose();
     _productNameController.dispose();
     _quantityController.dispose();
+    _discountPriceController.dispose();
   }
 
   List<String> productCategories = [
@@ -54,6 +57,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         description: _descriptionController.text,
         price: double.parse(_priceController.text),
         quantity: double.parse(_quantityController.text),
+        finalPrice: double.parse(_discountPriceController.text),
         category: category,
         images: images,
       );
@@ -158,11 +162,17 @@ class _AddProductScreenState extends State<AddProductScreen> {
                   controller: _descriptionController,
                   hintText: 'Description',
                   maxLines: 7,
+                  type: TextInputType.multiline,
+                  action: TextInputAction.none,
                 ),
                 const SizedBox(height: 10),
                 CustomText(
                   controller: _priceController,
                   hintText: 'Price',
+                ),
+                CustomText(
+                  controller: _discountPriceController,
+                  hintText: 'Discount Price',
                 ),
                 const SizedBox(height: 10),
                 CustomText(

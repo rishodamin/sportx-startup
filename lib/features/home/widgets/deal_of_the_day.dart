@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sportx/common/widgets/loader.dart';
+import 'package:sportx/common/widgets/product_card.dart';
 import 'package:sportx/features/home/services/home_services.dart';
 import 'package:sportx/features/product_details/screens/product_details_screen.dart';
 import 'package:sportx/models/product_models/product.dart';
@@ -55,27 +56,33 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
-                    Image.network(
-                      product!.images[0],
+                    Productcard(
+                      imageUrl: product!.images[0],
                       height: 235,
-                      fit: BoxFit.fitHeight,
                     ),
                     Container(
                       padding: const EdgeInsets.only(left: 15),
                       alignment: Alignment.topLeft,
-                      child: const Text(
-                        '\$999',
-                        style: TextStyle(fontSize: 18),
+                      child: Text(
+                        '₹${product!.price}',
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
                     Container(
                       alignment: Alignment.topLeft,
-                      padding:
-                          const EdgeInsets.only(left: 15, top: 5, right: 40),
-                      child: const Text(
-                        'ALLSTAR ULTRALIGHT ELECTRIC LAME SABER',
+                      padding: const EdgeInsets.only(
+                        left: 15,
+                        top: 5,
+                        right: 40,
+                        bottom: 5,
+                      ),
+                      child: Text(
+                        product!.description,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                     SingleChildScrollView(
@@ -83,12 +90,12 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: product!.images
-                            .map((e) => Image.network(
-                                  e,
-                                  fit: BoxFit.fitWidth,
-                                  width: 100,
+                            .map((e) => Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Productcard(
+                                  imageUrl: e,
                                   height: 100,
-                                ))
+                                )))
                             .toList(),
                       ),
                     ),
@@ -96,7 +103,7 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
                       padding:
                           const EdgeInsets.only(top: 15, bottom: 15, left: 15),
                       alignment: Alignment.topLeft,
-                      child: Text('See all deals',
+                      child: Text('View full details',
                           style: TextStyle(
                             color: Colors.cyan[800],
                           )),

@@ -21,16 +21,16 @@ class _CartProductState extends State<CartProduct> {
       ProductDetailsServices();
   final CartServices cartServices = CartServices();
 
-  void incrementQuantity(Product product) {
-    productDetailsServices.addToCart(
+  Future<void> incrementQuantity(Product product) async {
+    await productDetailsServices.addToCart(
       context: context,
       product: product,
       showMessage: false,
     );
   }
 
-  void decrementQuantity(Product product) {
-    cartServices.removeFromCart(
+  Future<void> decrementQuantity(Product product) async {
+    await cartServices.removeFromCart(
       context: context,
       product: product,
     );
@@ -38,7 +38,8 @@ class _CartProductState extends State<CartProduct> {
 
   @override
   Widget build(BuildContext context) {
-    final cartItem = Provider.of<UserProvider>(context).user.cart[widget.index];
+    final userProvider = Provider.of<UserProvider>(context);
+    final cartItem = userProvider.user.cart[widget.index];
     final Product product = cartItem.product;
     final int quantity = cartItem.quantity;
 
@@ -68,7 +69,7 @@ class _CartProductState extends State<CartProduct> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '\$${product.price}',
+                      '₹${product.finalPrice}',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -107,7 +108,11 @@ class _CartProductState extends State<CartProduct> {
                 child: Row(
                   children: [
                     InkWell(
-                      onTap: () => decrementQuantity(product),
+                      onTap: () {
+                        userProvider.setBusy(true);
+                        decrementQuantity(product)
+                            .then((_) => userProvider.setBusy(false));
+                      },
                       child: Container(
                         width: 35,
                         height: 32,
@@ -125,7 +130,11 @@ class _CartProductState extends State<CartProduct> {
                         alignment: Alignment.center,
                         child: Text(quantity.toString())),
                     InkWell(
-                      onTap: () => incrementQuantity(product),
+                      onTap: () {
+                        userProvider.setBusy(true);
+                        incrementQuantity(product)
+                            .then((_) => userProvider.setBusy(false));
+                      },
                       child: Container(
                         width: 35,
                         height: 32,

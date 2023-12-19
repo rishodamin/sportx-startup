@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sportx/common/widgets/custom_button.dart';
 import 'package:sportx/common/widgets/custom_textfield.dart';
+import 'package:sportx/common/widgets/line.dart';
+import 'package:sportx/common/widgets/square_tile.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/auth/services/auth_service.dart';
 
@@ -165,16 +167,53 @@ class _AuthScreenState extends State<AuthScreen> {
                           ),
                           const SizedBox(height: 10),
                           CustomButton(
-                              text: 'Sign In',
-                              onTap: () {
-                                if (_signInFormKey.currentState!.validate()) {
-                                  signInUser();
-                                }
-                              })
+                            text: 'Sign In',
+                            onTap: () {
+                              if (_signInFormKey.currentState!.validate()) {
+                                signInUser();
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ),
                   ),
+
+                const SizedBox(height: 30),
+
+                // or continue with
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  child: Row(
+                    children: [
+                      const Expanded(child: Line()),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
+                        child: Text(
+                          'Or continue with',
+                          style: TextStyle(color: Colors.grey[700]),
+                        ),
+                      ),
+                      const Expanded(child: Line()),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+                // google sign in button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SquareTile(
+                      imageUrl: GlobalVariables.googleLogo,
+                      onTap: () async {
+                        await authService.signInWithGoogle(context: context);
+                      },
+                    ),
+                  ],
+                ),
               ],
             ),
           ),

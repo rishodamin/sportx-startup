@@ -11,7 +11,7 @@ class User {
   final String password;
   final String type;
   final String token;
-  String address;
+  List<String> address;
   List<Cart> cart;
 
   User({

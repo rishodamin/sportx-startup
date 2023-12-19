@@ -2,12 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sportx/constants/error_handling.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/constants/utils.dart';
 import 'package:sportx/features/admin/models/sales.dart';
+import 'package:sportx/features/auth/screens/auth_screen.dart';
 import 'package:sportx/models/order_models/order.dart';
 import 'package:sportx/models/product_models/product.dart';
 import 'package:http/http.dart' as http;
@@ -22,6 +26,7 @@ class AdminServices {
     required double quantity,
     required String category,
     required List<File> images,
+    required double finalPrice,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
@@ -40,6 +45,7 @@ class AdminServices {
         images: imageUrls,
         category: category,
         price: price,
+        finalPrice: finalPrice,
       );
       // print('product is modeled');
       http.Response res = await http.post(
@@ -212,5 +218,21 @@ class AdminServices {
       'sales': sales,
       'totalEarnings': totalEarnings,
     };
+  }
+
+  void logout(BuildContext context) async {
+    try {
+      await GoogleSignIn().signOut();
+      await FirebaseAuth.instance.signOut();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('x-auth-token', '');
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AuthScreen.routeName,
+        (route) => false,
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
   }
 }

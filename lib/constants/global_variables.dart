@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 String uri = "https://remise.up.railway.app";
-//'http://192.168.53.41:3000'; //mine-53//mom-210//rido-211
+//String uri = 'http://192.168.53.41:3000'; //mine-53//mom-210//rido-211
 
 class GlobalVariables {
   // COLORS
@@ -19,6 +19,9 @@ class GlobalVariables {
   static const Color greyBackgroundCOlor = Color(0xffebecee);
   static var selectedNavBarColor = Colors.cyan[800]!;
   static const unselectedNavBarColor = Colors.black87;
+  static const lightBlueColor = Color.fromRGBO(216, 240, 253, 1);
+  static const lightPinkColor = Color.fromRGBO(255, 182, 193, 0.5);
+  static const halfWhiteColor = Color.fromRGBO(254, 240, 227, 1);
 
   // STATIC IMAGES
   static const List<String> carouselImages = [
@@ -51,4 +54,7 @@ class GlobalVariables {
       'image': 'assets/images/fashion.jpeg',
     },
   ];
+
+  static const String googleLogo =
+      'https://www.google.com/images/hpp/ic_wahlberg_product_core_48.png8.png';
 }

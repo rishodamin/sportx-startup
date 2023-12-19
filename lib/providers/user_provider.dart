@@ -9,14 +9,23 @@ class UserProvider extends ChangeNotifier {
     id: '',
     name: '',
     password: '',
-    address: '',
+    address: [],
     type: '',
     token: '',
     email: '',
     cart: [],
   );
 
+  bool _isBusy = false;
+
   User get user => _user;
+
+  bool get isBusy => _isBusy;
+
+  void setBusy(bool busy) {
+    _isBusy = busy;
+    notifyListeners();
+  }
 
   void setUser(String user) {
     Map<String, dynamic> userMap = jsonDecode(user);
@@ -29,7 +38,7 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateAddress(String address) {
+  void updateAddress(List<String> address) {
     _user.address = address;
     notifyListeners();
   }

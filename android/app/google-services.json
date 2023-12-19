@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "492383036220",
+    "project_id": "remise-in",
+    "storage_bucket": "remise-in.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492383036220:android:da294e7dfd351ccbf77439",
+        "android_client_info": {
+          "package_name": "com.example.sportx"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGIW7rqFh4xjuY0lxVF7wtDG8RMtNYuew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

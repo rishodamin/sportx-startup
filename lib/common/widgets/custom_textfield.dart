@@ -5,16 +5,21 @@ class CustomText extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final int maxLines;
-  const CustomText({
-    super.key,
-    required this.controller,
-    required this.hintText,
-    this.maxLines = 1,
-  });
+  final TextInputType type;
+  final TextInputAction action;
+  const CustomText(
+      {super.key,
+      required this.controller,
+      required this.hintText,
+      this.maxLines = 1,
+      this.type = TextInputType.text,
+      this.action = TextInputAction.done});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textInputAction: action,
+      keyboardType: type,
       maxLines: maxLines,
       cursorColor: Colors.black,
       controller: controller,

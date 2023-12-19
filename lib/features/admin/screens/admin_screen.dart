@@ -3,6 +3,7 @@ import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/admin/screens/analytics_screen.dart';
 import 'package:sportx/features/admin/screens/orders_screen.dart';
 import 'package:sportx/features/admin/screens/posts_screen.dart';
+import 'package:sportx/features/admin/services/admin_services.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
@@ -15,6 +16,7 @@ class _AdminScreenState extends State<AdminScreen> {
   int _page = 0;
   final double _bottomBarWidth = 42;
   final double _bottomBarBorderWidth = 5;
+  final AdminServices _adminServices = AdminServices();
 
   List<Widget> pages = [
     const PostsScreen(),
@@ -50,10 +52,15 @@ class _AdminScreenState extends State<AdminScreen> {
                   height: 45,
                 ),
               ),
-              const Text(
-                'Admin',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+              GestureDetector(
+                onTap: () {
+                  _adminServices.logout(context);
+                },
+                child: const Text(
+                  'Logout',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
+                ),
               )
             ],
           ),

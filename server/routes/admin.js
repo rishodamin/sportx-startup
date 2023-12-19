@@ -8,7 +8,7 @@ const Category = require('../models/category');
 // Add product
 adminRouter.post('/admin/add-product', admin, async (req, res) => {
     try {
-        const { name, description, images, quantity, price, category} = req.body;
+        const { name, description, images, quantity, price, category, finalPrice} = req.body;
         
         let product = new Product({
             name,
@@ -16,6 +16,7 @@ adminRouter.post('/admin/add-product', admin, async (req, res) => {
             images,
             quantity,
             price,
+            finalPrice,
             category,
         });
         product = await product.save();

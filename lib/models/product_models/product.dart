@@ -11,6 +11,7 @@ class Product {
   final List<String> images;
   final String category;
   final double price;
+  final double finalPrice;
   final String? id;
   final List<Rating>? rating;
 
@@ -21,6 +22,7 @@ class Product {
     required this.images,
     required this.category,
     required this.price,
+    required this.finalPrice,
     this.id,
     this.rating,
   });

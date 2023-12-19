@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sportx/common/widgets/loader.dart';
 import 'package:sportx/constants/global_variables.dart';
+import 'package:sportx/features/account/screens/my_orders_screen.dart';
 import 'package:sportx/features/account/services/account_services.dart';
 import 'package:sportx/features/account/widgets/single_product.dart';
 import 'package:sportx/features/order_details/screens/order_details.dart';
@@ -51,11 +52,17 @@ class _OrdersState extends State<Orders> {
                       ),
                       Container(
                         padding: const EdgeInsets.only(right: 15),
-                        child: Text(
-                          'See all',
-                          style: TextStyle(
-                            color: GlobalVariables.selectedNavBarColor,
-                            fontSize: 16,
+                        child: GestureDetector(
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            MyOrders.routeName,
+                          ),
+                          child: Text(
+                            'See all',
+                            style: TextStyle(
+                              color: GlobalVariables.selectedNavBarColor,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),

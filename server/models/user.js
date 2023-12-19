@@ -30,10 +30,11 @@ const userSchema = mongoose.Schema({
             message: "Please enter a long password",
         },
     },
-    address: {
+    address: [
+        {
         type: String,
-        default: '',
-    },
+        }
+    ],
     type: {
         type: String,
         default: 'user',
@@ -46,7 +47,7 @@ const userSchema = mongoose.Schema({
                 required: true,
             },
         }
-    ]
+    ],
 });
 
 const User = mongoose.model('User', userSchema);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sportx/common/widgets/random_products.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/account/widgets/below_app_bar.dart';
 import 'package:sportx/features/account/widgets/orders.dart';
@@ -18,41 +19,41 @@ class AccountScreen extends StatelessWidget {
               gradient: GlobalVariables.appBarGradient,
             ),
           ),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment: Alignment.topLeft,
-                child: Image.asset(
-                  'assets/images/amazon_in.png',
-                  width: 120,
-                  height: 45,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.only(right: 15),
-                      child: Icon(Icons.notifications_outlined),
-                    ),
-                    Icon(Icons.search),
-                  ],
-                ),
-              )
-            ],
+          title: Image.asset(
+            'assets/images/amazon_in.png',
+            width: 120,
+            height: 45,
           ),
         ),
       ),
-      body: Column(
-        children: const [
-          BelowAppBar(),
-          SizedBox(height: 10),
-          TopButtons(),
-          SizedBox(height: 20),
-          Orders(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const BelowAppBar(),
+            const SizedBox(height: 20),
+            const TopButtons(),
+            const SizedBox(height: 20),
+            const Orders(),
+            // display random products
+            const SizedBox(height: 80),
+            const Padding(
+              padding: EdgeInsets.only(left: 8),
+              child: Text(
+                "Deals for you :)",
+                style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Builder(
+              builder: (BuildContext context) => const RandomProducts(),
+            ),
+            //////////////////////////
+          ],
+        ),
       ),
     );
   }

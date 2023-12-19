@@ -80,7 +80,7 @@ userRouter.post('/api/order', auth, async (req, res) => {
                         "name": product.category,
                     });
                 }
-                category.earnings += product.price;
+                category.earnings += product.finalPrice;
                 category.ordered += 1;
                 category.save();
             } else {

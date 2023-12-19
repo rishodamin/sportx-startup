@@ -9,9 +9,9 @@ import 'package:http/http.dart' as http;
 import 'package:sportx/providers/user_provider.dart';
 
 class AddressServices {
-  void saveUserAddress({
+  Future<void> saveUserAddress({
     required BuildContext context,
-    required String address,
+    required List<String> address,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
@@ -35,7 +35,7 @@ class AddressServices {
     }
   }
 
-  void placeOrder({
+  Future<void> placeOrder({
     required BuildContext context,
     required String address,
     required double totalSum,

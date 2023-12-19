@@ -1,30 +1,33 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:sportx/common/widgets/bottom_bar.dart';
 import 'package:sportx/constants/error_handling.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/constants/utils.dart';
-import 'package:sportx/models/user_models/user.dart';
+import 'package:sportx/models/user_models/user.dart' as user_model;
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sportx/providers/user_provider.dart';
 
 class AuthService {
   //sign up user
-  void signUpUser({
+  Future<void> signUpUser({
     required BuildContext context,
     required String email,
     required String password,
     required String name,
+    bool fromGoogleSignUp = false,
   }) async {
     try {
-      User user = User(
+      user_model.User user = user_model.User(
         id: '',
         name: name,
         password: password,
-        address: '',
+        address: [],
         type: '',
         token: '',
         email: email,
@@ -39,21 +42,23 @@ class AuthService {
         },
       );
 
-      httpErrorHandle(
-        response: res,
-        context: context,
-        onSuccess: () {
-          showSnackBar(
-              context, 'Account created!! Login with the same credentials');
-        },
-      );
+      if (!fromGoogleSignUp) {
+        httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () {
+            showSnackBar(
+                context, 'Account created!! Login with the same credentials');
+          },
+        );
+      }
     } catch (e) {
       showSnackBar(context, e.toString());
     }
   }
 
   //sign up user
-  void signInUser({
+  Future<void> signInUser({
     required BuildContext context,
     required String email,
     required String password,
@@ -90,7 +95,7 @@ class AuthService {
   }
 
   // get uder data
-  void getUserData(
+  Future<void> getUserData(
     BuildContext context,
   ) async {
     try {
@@ -123,6 +128,48 @@ class AuthService {
 
         Provider.of<UserProvider>(context, listen: false).setUser(userRes.body);
       }
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  // sign in with google
+  Future<void> signInWithGoogle({
+    required BuildContext context,
+  }) async {
+    try {
+      // begin interactive sign in process
+      final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
+
+      // obtain auth details from req
+      final GoogleSignInAuthentication gAuth = await gUser!.authentication;
+
+      // create a new cred for user
+      final credential = GoogleAuthProvider.credential(
+        accessToken: gAuth.accessToken,
+        idToken: gAuth.idToken,
+      );
+
+      // finally, let's sign in
+      UserCredential userCred =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      String name, email, password;
+      name = userCred.user!.displayName!;
+      email = 'google${userCred.user!.uid}@gmail.com';
+      password = userCred.user!.uid;
+      signUpUser(
+        context: context,
+        email: email,
+        password: password,
+        name: name,
+        fromGoogleSignUp: true,
+      ).then((_) async {
+        await signInUser(
+          context: context,
+          email: email,
+          password: password,
+        );
+      });
     } catch (e) {
       showSnackBar(context, e.toString());
     }

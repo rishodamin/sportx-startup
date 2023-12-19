@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sportx/common/widgets/bottom_bar.dart';
@@ -5,10 +6,15 @@ import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/admin/screens/admin_screen.dart';
 import 'package:sportx/features/auth/screens/auth_screen.dart';
 import 'package:sportx/features/auth/services/auth_service.dart';
+import 'package:sportx/firebase_options.dart';
 import 'package:sportx/providers/user_provider.dart';
 import 'package:sportx/router.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
