@@ -4,7 +4,6 @@ import 'package:sportx/common/widgets/loader.dart';
 import 'package:sportx/common/widgets/product_card.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/product_details/screens/product_details_screen.dart';
-import 'package:sportx/features/search/widget/searched_product.dart';
 import 'package:sportx/models/product_models/product.dart';
 
 class RandomProducts extends StatefulWidget {

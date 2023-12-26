@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pay/pay.dart';
 
 import 'package:provider/provider.dart';
 import 'package:sportx/common/widgets/custom_button.dart';

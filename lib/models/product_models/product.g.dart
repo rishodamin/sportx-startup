@@ -19,6 +19,9 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       rating: (json['rating'] as List<dynamic>?)
           ?.map((e) => Rating.fromJson(e as Map<String, dynamic>))
           .toList(),
+      size: json['size'] == null
+          ? []
+          : (json['size'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
@@ -31,4 +34,5 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       'finalPrice': instance.finalPrice,
       'id': instance.id,
       'rating': instance.rating,
+      'size': instance.size,
     };

@@ -30,6 +30,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       ProductDetailsServices();
   double avgRating = 0;
   double myRating = 0;
+  int? selectedSizeIndex;
 
   void navigateToSearchScreen(String query) {
     if (query != '') {
@@ -77,6 +78,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 widget.product.price) *
             100)
         .ceil();
+    print(widget.product.size);
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(59),
@@ -278,6 +280,34 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Container(
               color: Colors.black12,
               height: 5,
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              height: 50,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: widget.product.size.length,
+                itemBuilder: (context, index) {
+                  final size = widget.product.size[index];
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedSizeIndex = index;
+                        });
+                      },
+                      child: Chip(
+                        label: Text(size),
+                        backgroundColor: (selectedSizeIndex != null &&
+                                selectedSizeIndex == index)
+                            ? Theme.of(context).colorScheme.primary
+                            : null,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),

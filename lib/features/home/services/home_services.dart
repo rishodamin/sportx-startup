@@ -53,6 +53,7 @@ class HomeServices {
       category: '',
       price: 0,
       finalPrice: 0,
+      size: [],
     );
     try {
       // print(userProvider.user.token);

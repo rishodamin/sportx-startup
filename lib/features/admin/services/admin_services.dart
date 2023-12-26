@@ -27,6 +27,7 @@ class AdminServices {
     required String category,
     required List<File> images,
     required double finalPrice,
+    required List<String> size,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     try {
@@ -46,6 +47,7 @@ class AdminServices {
         category: category,
         price: price,
         finalPrice: finalPrice,
+        size: size,
       );
       // print('product is modeled');
       http.Response res = await http.post(
@@ -56,6 +58,7 @@ class AdminServices {
         },
         body: jsonEncode(product.toJson()),
       );
+      print(res.body);
       httpErrorHandle(
         response: res,
         context: context,

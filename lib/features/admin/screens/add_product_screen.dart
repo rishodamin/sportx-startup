@@ -24,6 +24,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController _quantityController = TextEditingController();
   final TextEditingController _discountPriceController =
       TextEditingController();
+  final TextEditingController _sizeController = TextEditingController();
   final AdminServices adminServices = AdminServices();
 
   @override
@@ -34,6 +35,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
     _productNameController.dispose();
     _quantityController.dispose();
     _discountPriceController.dispose();
+    _sizeController.dispose();
   }
 
   List<String> productCategories = [
@@ -60,7 +62,9 @@ class _AddProductScreenState extends State<AddProductScreen> {
         finalPrice: double.parse(_discountPriceController.text),
         category: category,
         images: images,
+        size: _sizeController.text.split(' '),
       );
+      //print(_sizeController.text.split(' '));
     } else {
       showSnackBar(context, 'Validation failed');
     }
@@ -178,6 +182,11 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 CustomText(
                   controller: _quantityController,
                   hintText: 'Quantity',
+                ),
+                const SizedBox(height: 10),
+                CustomText(
+                  controller: _sizeController,
+                  hintText: 'Size (Seperate it by space)',
                 ),
                 const SizedBox(height: 10),
                 SizedBox(

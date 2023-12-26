@@ -14,6 +14,7 @@ class Product {
   final double finalPrice;
   final String? id;
   final List<Rating>? rating;
+  final List<String> size;
 
   Product({
     required this.name,
@@ -23,6 +24,7 @@ class Product {
     required this.category,
     required this.price,
     required this.finalPrice,
+    required this.size,
     this.id,
     this.rating,
   });
