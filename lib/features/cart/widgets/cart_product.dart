@@ -26,6 +26,7 @@ class _CartProductState extends State<CartProduct> {
       context: context,
       product: product,
       showMessage: false,
+      size: '',
     );
   }
 

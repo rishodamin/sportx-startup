@@ -9,12 +9,12 @@ const userRouter = express.Router();
 // Add cart
 userRouter.post('/api/add-to-cart', auth, async (req, res) => {
     try {
-        const {id} = req.body;
+        const {id, size} = req.body;
         const product = await Product.findById(id);
         let user = await User.findById(req.user);
         let res_product = await user.cart.find((prod)=>prod.product._id.equals(product._id));
         if (res_product==null){
-            user.cart.push({ product, quantity : 1});
+            user.cart.push({ product, quantity : 1, size});
         } else {
             res_product.quantity += 1;
         }
@@ -73,7 +73,7 @@ userRouter.post('/api/order', auth, async (req, res) => {
            let product = await Product.findById(cart[i].product.id);
             if(product.quantity>=cart[i].quantity){
                 product.quantity -= cart[i].quantity
-                products.push({product, quantity: cart[i].quantity});
+                products.push({product, quantity: cart[i].quantity, size: cart[i].size});
                 let category = await Category.findOne({"name":product.category});
                 if (category==null){
                     category = new Category({

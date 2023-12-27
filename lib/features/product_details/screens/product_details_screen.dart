@@ -6,6 +6,7 @@ import 'package:sportx/common/widgets/custom_button.dart';
 import 'package:sportx/common/widgets/product_card.dart';
 import 'package:sportx/common/widgets/stars.dart';
 import 'package:sportx/constants/global_variables.dart';
+import 'package:sportx/constants/utils.dart';
 import 'package:sportx/features/product_details/services/product_details_services.dart';
 import 'package:sportx/features/search/screens/search_screen.dart';
 import 'package:sportx/models/product_models/product.dart';
@@ -63,7 +64,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   void addToCart() {
-    productDetailsServices.addToCart(context: context, product: widget.product);
+    if (widget.product.size.isNotEmpty && selectedSizeIndex == null) {
+      showSnackBar(context, 'Please select a size');
+      return;
+    }
+    productDetailsServices.addToCart(
+      context: context,
+      product: widget.product,
+      size: widget.product.size.isEmpty
+          ? ''
+          : widget.product.size[selectedSizeIndex!],
+    );
   }
 
   @override
@@ -280,6 +291,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Container(
               color: Colors.black12,
               height: 5,
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              '  Choose a Size',
+              style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 10),
             SizedBox(

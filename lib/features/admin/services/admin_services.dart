@@ -49,7 +49,7 @@ class AdminServices {
         finalPrice: finalPrice,
         size: size,
       );
-      // print('product is modeled');
+      print('product is modeled');
       http.Response res = await http.post(
         Uri.parse('$uri/admin/add-product'),
         headers: <String, String>{

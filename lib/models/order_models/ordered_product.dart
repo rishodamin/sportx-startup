@@ -7,10 +7,12 @@ part 'ordered_product.g.dart';
 class OrderedProduct {
   final Product product;
   final int quantity;
+  final String size;
 
   OrderedProduct({
     required this.product,
     required this.quantity,
+    required this.size,
   });
 
   factory OrderedProduct.fromJson(Map<String, dynamic> json) =>

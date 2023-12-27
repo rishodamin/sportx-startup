@@ -44,6 +44,7 @@ class ProductDetailsServices {
   Future<void> addToCart({
     required BuildContext context,
     required Product product,
+    required String size,
     bool showMessage = true,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -57,6 +58,7 @@ class ProductDetailsServices {
         body: jsonEncode(
           {
             'id': product.id,
+            'size': size,
           },
         ),
       );
