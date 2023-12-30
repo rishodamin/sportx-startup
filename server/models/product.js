@@ -35,7 +35,7 @@ const productSchema = mongoose.Schema({
     ratings: [ratingSchema],
     size: [{
           type: String,
-          required: true,
+          default: '',
         },],
 });
 
