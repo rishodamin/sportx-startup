@@ -3,16 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sportx/common/widgets/custom_button.dart';
 import 'package:sportx/common/widgets/custom_textfield.dart';
+import 'package:sportx/common/widgets/product_card.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/constants/utils.dart';
+import 'package:sportx/features/address/screens/payment_screen.dart';
 import 'package:sportx/features/address/services/address_services.dart';
 import 'package:sportx/features/cart/widgets/cart_subtotal.dart';
 import 'package:sportx/providers/user_provider.dart';
 
 class AddressScreen extends StatefulWidget {
   static const String routeName = '/address';
+  final String imageUrl;
   final String amount;
-  const AddressScreen({super.key, required this.amount});
+  const AddressScreen({
+    super.key,
+    required this.amount,
+    required this.imageUrl,
+  });
 
   @override
   State<AddressScreen> createState() => _AddressScreenState();
@@ -74,17 +81,20 @@ class _AddressScreenState extends State<AddressScreen> {
     _phoneNumberController.text = '';
   }
 
-  Future<bool> placeOrder() async {
+  void navigatoToPaymentScreen() {
     if (addressToUsed == 'Select an address') {
       showSnackBar(context, addressToUsed);
-      return false;
+      return;
     }
-    await _addressServices.placeOrder(
-      context: context,
-      address: addressToUsed,
-      totalSum: double.parse(widget.amount),
+    Navigator.pushNamed(
+      context,
+      PaymentScreen.routeName,
+      arguments: {
+        'amount': widget.amount,
+        'imageUrl': widget.imageUrl,
+        'address': addressToUsed
+      },
     );
-    return true;
   }
 
   @override
@@ -98,6 +108,12 @@ class _AddressScreenState extends State<AddressScreen> {
               gradient: GlobalVariables.appBarGradient,
             ),
           ),
+          title: const Text(
+            'Delivery address',
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -106,6 +122,24 @@ class _AddressScreenState extends State<AddressScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Stack(
+                children: [
+                  Productcard(
+                    imageUrl: widget.imageUrl,
+                    height: 80,
+                    setBorder: true,
+                  ),
+                  Positioned(
+                    top: -3,
+                    left: -3,
+                    child: Productcard(
+                      imageUrl: widget.imageUrl,
+                      height: 80,
+                      setBorder: true,
+                    ),
+                  ),
+                ],
+              ),
               const CartSubtotal(),
               const SizedBox(height: 15),
               Container(
@@ -135,7 +169,7 @@ class _AddressScreenState extends State<AddressScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: 250,
+                              width: 200,
                               child: Text(
                                 addressToUsed,
                                 style: const TextStyle(fontSize: 18),
@@ -210,8 +244,7 @@ class _AddressScreenState extends State<AddressScreen> {
                         Padding(
                           padding: const EdgeInsets.only(top: 30),
                           child: CustomButton(
-                            color: GlobalVariables.selectedNavBarColor
-                                .withOpacity(0.7),
+                            color: Colors.white,
                             text: 'Add a new address',
                             onTap: () => setState(() {
                               isAddingAddress = true;
@@ -224,6 +257,7 @@ class _AddressScreenState extends State<AddressScreen> {
                       key: _addressFormKey,
                       child: Column(
                         children: [
+                          const SizedBox(height: 30),
                           CustomText(
                             controller: _flatBuildingController,
                             hintText: 'Flat, House no, Building',
@@ -271,6 +305,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                         text: 'Saving..', onTap: () {})
                                     : CustomButton(
                                         text: 'Save',
+                                        color: GlobalVariables.remiseBlueColor,
                                         onTap: () async {
                                           isLoading = true;
                                           setState(() {});
@@ -295,15 +330,9 @@ class _AddressScreenState extends State<AddressScreen> {
           : Padding(
               padding: const EdgeInsets.all(12.0),
               child: CustomButton(
-                color: Colors.yellow[600],
-                text: 'Proceed to Pay',
-                onTap: () async {
-                  bool result = await placeOrder();
-                  if (result) {
-                    Navigator.of(context).pop();
-                  }
-                },
-              ),
+                  color: GlobalVariables.remiseBlueColor,
+                  text: 'Proceed to Pay',
+                  onTap: navigatoToPaymentScreen),
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );

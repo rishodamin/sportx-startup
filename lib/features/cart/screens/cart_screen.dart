@@ -27,11 +27,14 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  void navigateToAddressScreen(double sum) {
+  void navigateToAddressScreen(double sum, String imageUrl) {
     Navigator.pushNamed(
       context,
       AddressScreen.routeName,
-      arguments: sum.toString(),
+      arguments: {
+        'amount': sum.toString(),
+        'imageUrl': imageUrl,
+      },
     );
   }
 
@@ -87,7 +90,7 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ),
                   ),
-                  hintText: 'Search Amazon.in',
+                  hintText: 'Search Remise.in',
                 ),
               ),
             ),
@@ -113,12 +116,14 @@ class _CartScreenState extends State<CartScreen> {
                       ? CustomButton(
                           text: 'Updating..',
                           onTap: () {},
-                          color: Colors.yellow[100],
+                          color:
+                              GlobalVariables.remiseBlueColor.withOpacity(0.75),
                         )
                       : CustomButton(
                           text: 'Proceed to Buy (${user.cart.length} items)',
-                          onTap: () => navigateToAddressScreen(subtotal),
-                          color: Colors.yellow[600],
+                          onTap: () => navigateToAddressScreen(
+                              subtotal, user.cart[0].product.images[0]),
+                          color: GlobalVariables.remiseBlueColor,
                         ),
             ),
             const SizedBox(height: 15),

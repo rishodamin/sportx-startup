@@ -97,7 +97,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       ),
                     ),
-                    hintText: 'Search Amazon.in',
+                    hintText: 'Search Remise.in',
                   ),
                 ),
               ),

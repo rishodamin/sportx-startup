@@ -45,7 +45,7 @@ class _BottomBarState extends State<BottomBar> {
         backgroundColor: GlobalVariables.backgroundColor,
         iconSize: 28,
         items: [
-          // Home
+          // Search
           BottomNavigationBarItem(
             icon: Container(
               width: _bottomBarWidth,
@@ -59,11 +59,11 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-              child: const Icon(Icons.home_outlined),
+              child: const Icon(Icons.search),
             ),
             label: '',
           ),
-          // Profile
+          // Home
           BottomNavigationBarItem(
             icon: Container(
               width: _bottomBarWidth,
@@ -77,7 +77,7 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-              child: const Icon(Icons.person_outline_outlined),
+              child: const Icon(Icons.home_outlined),
             ),
             label: '',
           ),

@@ -18,12 +18,21 @@ class UserProvider extends ChangeNotifier {
 
   bool _isBusy = false;
 
+  bool _hasStarted = false;
+
   User get user => _user;
 
   bool get isBusy => _isBusy;
 
+  bool get hasStarted => _hasStarted;
+
   void setBusy(bool busy) {
     _isBusy = busy;
+    notifyListeners();
+  }
+
+  void setStartedStatus(bool hasStarted) {
+    _hasStarted = hasStarted;
     notifyListeners();
   }
 

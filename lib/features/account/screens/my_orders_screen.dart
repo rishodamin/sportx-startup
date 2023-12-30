@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sportx/common/widgets/loader.dart';
+import 'package:sportx/common/widgets/product_card.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/account/services/account_services.dart';
-import 'package:sportx/features/account/widgets/single_product.dart';
 import 'package:sportx/features/order_details/screens/order_details.dart';
 import 'package:sportx/models/order_models/order.dart';
 
@@ -27,6 +27,7 @@ class _MyOrdersState extends State<MyOrders> {
 
   void fetchOrders() async {
     orders = await _accountServices.fetchMyOrders(context: context);
+    orders = orders!.reversed.toList();
     setState(() {});
   }
 
@@ -84,8 +85,10 @@ class _MyOrdersState extends State<MyOrders> {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          SingleProduct(
-                              image: orderData.products[0].product.images[0]),
+                          Productcard(
+                              height: 140,
+                              imageUrl:
+                                  orderData.products[0].product.images[0]),
                           const SizedBox(height: 8),
                           Text(
                               'Ordered at ${DateFormat().format(DateTime.fromMillisecondsSinceEpoch(orderData.orderedAt))}')

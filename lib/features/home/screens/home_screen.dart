@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ),
-                          hintText: 'Search Amazon.in',
+                          hintText: 'Search Remise.in',
                         ),
                       ),
                     ),
@@ -132,33 +132,14 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        body: SingleChildScrollView(
+        body: const SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const AddressBox(),
-              const SizedBox(height: 10),
-              const TopCategories(),
-              const SizedBox(height: 10),
-              const CarouselImage(),
-              const DealOfTheDay(),
-              // display random products
-              const SizedBox(height: 10),
-              const Padding(
-                padding: EdgeInsets.only(left: 8),
-                child: Text(
-                  "Deals for you :)",
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Builder(
-                builder: (BuildContext context) => const RandomProducts(),
-              ),
-              //////////////////////////
+              AddressBox(),
+              TopCategories(),
+              //   CarouselImage(),
+              DealOfTheDay(),
             ],
           ),
         ));

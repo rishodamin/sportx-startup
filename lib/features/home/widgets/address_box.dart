@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/providers/user_provider.dart';
 
 class AddressBox extends StatelessWidget {
@@ -12,15 +13,8 @@ class AddressBox extends StatelessWidget {
         alignment: Alignment.centerLeft,
         width: double.infinity,
         height: 40,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color.fromARGB(255, 114, 226, 221),
-              Color.fromARGB(255, 162, 236, 233),
-            ],
-            stops: [0.5, 1.0],
-          ),
-        ),
+        decoration:
+            const BoxDecoration(gradient: GlobalVariables.appBarGradient),
         padding: const EdgeInsets.only(left: 15),
         child: Text(
           'Welcome ${user.name} !',

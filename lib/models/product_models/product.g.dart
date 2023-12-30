@@ -16,7 +16,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
       price: (json['price'] as num).toDouble(),
       finalPrice: (json['finalPrice'] as num).toDouble(),
       id: json['_id'] as String?,
-      rating: (json['rating'] as List<dynamic>?)
+      rating: (json['ratings'] as List<dynamic>?)
           ?.map((e) => Rating.fromJson(e as Map<String, dynamic>))
           .toList(),
       size: json['size'] == null

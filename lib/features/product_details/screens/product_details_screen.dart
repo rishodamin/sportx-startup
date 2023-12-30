@@ -43,14 +43,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
   }
 
-  void updateRatings() {
+  void updateRatings({double? rating}) {
+    print(widget.product.rating);
     if (widget.product.rating != null) {
       double totalRatings = 0;
       for (int i = 0; i < widget.product.rating!.length; i++) {
         totalRatings += widget.product.rating![i].rating;
         if (widget.product.rating![i].userId ==
             Provider.of<UserProvider>(context, listen: false).user.id) {
-          myRating = widget.product.rating![i].rating;
+          if (rating == null) {
+            myRating = widget.product.rating![i].rating;
+          } else {
+            totalRatings -= widget.product.rating![i].rating - rating;
+            widget.product.rating![i].rating = rating;
+          }
         }
       }
       if (totalRatings > 0) {
@@ -68,13 +74,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       showSnackBar(context, 'Please select a size');
       return;
     }
-    productDetailsServices.addToCart(
-      context: context,
-      product: widget.product,
-      size: widget.product.size.isEmpty
-          ? ''
-          : widget.product.size[selectedSizeIndex!],
-    );
+    Provider.of<UserProvider>(context, listen: false).setBusy(true);
+    productDetailsServices
+        .addToCart(
+          context: context,
+          product: widget.product,
+          size: widget.product.size.isEmpty
+              ? ''
+              : widget.product.size[selectedSizeIndex!],
+        )
+        .then((value) =>
+            Provider.of<UserProvider>(context, listen: false).setBusy(false));
   }
 
   @override
@@ -129,7 +139,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                   ),
-                  hintText: 'Search Amazon.in',
+                  hintText: 'Search Remise.in',
                 ),
               ),
             ),
@@ -173,7 +183,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     children: [
                       const Icon(
                         Icons.circle,
-                        color: GlobalVariables.halfWhiteColor,
+                        color: GlobalVariables.remiseBlueColor,
                         size: 80,
                       ),
                       Column(
@@ -181,7 +191,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           Text(
                             ' $offer%',
                             style: const TextStyle(
-                              color: Colors.green,
+                              color: GlobalVariables.halfWhiteColor,
                               fontSize: 22,
                               fontWeight: FontWeight.w600,
                             ),
@@ -189,7 +199,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           const Text(
                             'off',
                             style: TextStyle(
-                              color: Colors.green,
+                              color: GlobalVariables.halfWhiteColor,
                             ),
                           ),
                         ],
@@ -214,7 +224,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ' · ' * widget.product.images.length,
                 style: TextStyle(
                   fontSize: 40,
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.withOpacity(0.75),
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -276,55 +286,73 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: CustomButton(text: 'Buy Now', onTap: () {}),
-            ),
-            const SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.all(10),
               child: CustomButton(
-                color: const Color.fromRGBO(254, 216, 19, 1),
-                text: 'Add to Cart',
-                onTap: addToCart,
+                text: 'Buy Now',
+                onTap: () {},
+                color: const Color.fromARGB(255, 104, 233, 61),
               ),
             ),
+            const SizedBox(height: 10),
+            Provider.of<UserProvider>(context).isBusy
+                ? Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: CustomButton(
+                      color: GlobalVariables.remiseBlueColor.withOpacity(0.5),
+                      text: 'Addding to Cart..',
+                      onTap: () {},
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: CustomButton(
+                      color: GlobalVariables.remiseBlueColor,
+                      text: 'Add to Cart',
+                      onTap: addToCart,
+                    ),
+                  ),
             const SizedBox(height: 10),
             Container(
               color: Colors.black12,
               height: 5,
             ),
             const SizedBox(height: 10),
-            const Text(
-              '  Choose a Size',
-              style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 50,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.product.size.length,
-                itemBuilder: (context, index) {
-                  final size = widget.product.size[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedSizeIndex = index;
-                        });
+            if (widget.product.size.isNotEmpty)
+              Column(
+                children: [
+                  const Text(
+                    '  Choose a Size',
+                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 50,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: widget.product.size.length,
+                      itemBuilder: (context, index) {
+                        final size = widget.product.size[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedSizeIndex = index;
+                              });
+                            },
+                            child: Chip(
+                              label: Text(size),
+                              backgroundColor: (selectedSizeIndex != null &&
+                                      selectedSizeIndex == index)
+                                  ? Theme.of(context).colorScheme.primary
+                                  : null,
+                            ),
+                          ),
+                        );
                       },
-                      child: Chip(
-                        label: Text(size),
-                        backgroundColor: (selectedSizeIndex != null &&
-                                selectedSizeIndex == index)
-                            ? Theme.of(context).colorScheme.primary
-                            : null,
-                      ),
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
-            ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: Text(
@@ -346,13 +374,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
                 itemBuilder: (context, _) => const Icon(
                       Icons.star,
-                      color: GlobalVariables.secondaryColor,
+                      color: GlobalVariables.remiseBlueColor,
                     ),
                 onRatingUpdate: (rating) {
                   productDetailsServices.rateProduct(
-                      context: context,
-                      product: widget.product,
-                      rating: rating);
+                    context: context,
+                    product: widget.product,
+                    rating: rating,
+                  );
+                  updateRatings(rating: rating);
+                  setState(() {});
                 }),
           ],
         ),

@@ -19,10 +19,29 @@ class AccountScreen extends StatelessWidget {
               gradient: GlobalVariables.appBarGradient,
             ),
           ),
-          title: Image.asset(
-            'assets/images/amazon_in.png',
-            width: 120,
-            height: 45,
+          title: const Row(
+            children: [
+              Text(
+                'Remise',
+                style: TextStyle(
+                  letterSpacing: -1.25,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 2),
+                child: Text(
+                  '.in',
+                  style: TextStyle(
+                    letterSpacing: -1.25,
+                    fontSize: 22,
+                    color: Colors.black,
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sportx/common/widgets/custom_button.dart';
+import 'package:sportx/common/widgets/product_card.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/admin/services/admin_services.dart';
 import 'package:sportx/features/search/screens/search_screen.dart';
@@ -107,7 +108,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                         ),
                       ),
                     ),
-                    hintText: 'Search Amazon.in',
+                    hintText: 'Search Remise.in',
                   ),
                 ),
               ),
@@ -168,9 +169,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       for (int i = 0; i < widget.product.length; i++)
                         Row(
                           children: [
-                            Image.network(
-                              widget.product[i].product.images[0],
-                              width: 120,
+                            Productcard(
+                              imageUrl: widget.product[i].product.images[0],
                               height: 120,
                             ),
                             const SizedBox(width: 5),
@@ -188,6 +188,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 Text('Qty: ${widget.product[i].quantity}'),
+                                if (widget.product[i].size.isNotEmpty)
+                                  Text('Size: ${widget.product[i].size}'),
                               ],
                             ))
                           ],

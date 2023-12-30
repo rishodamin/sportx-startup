@@ -20,7 +20,7 @@ class AuthScreen extends StatefulWidget {
 }
 
 class _AuthScreenState extends State<AuthScreen> {
-  Auth auth = Auth.signup;
+  Auth auth = Auth.signin;
   final _signUpFormKey = GlobalKey<FormState>();
   final _signInFormKey = GlobalKey<FormState>();
   final AuthService authService = AuthService();
@@ -72,6 +72,58 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
                 ListTile(
+                  tileColor: auth == Auth.signin
+                      ? GlobalVariables.backgroundColor
+                      : GlobalVariables.greyBackgroundCOlor,
+                  title: const Text(
+                    'Sign-In',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  leading: Radio(
+                    activeColor: GlobalVariables.remiseBlueColor,
+                    value: Auth.signin,
+                    groupValue: auth,
+                    onChanged: (Auth? val) {
+                      setState(() {
+                        auth = val!;
+                      });
+                    },
+                  ),
+                ),
+                if (auth == Auth.signin)
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    color: GlobalVariables.backgroundColor,
+                    child: Form(
+                      key: _signInFormKey,
+                      child: Column(
+                        children: [
+                          CustomText(
+                            controller: _emailController,
+                            hintText: 'Email',
+                          ),
+                          const SizedBox(height: 10),
+                          CustomText(
+                            controller: _passwordController,
+                            hintText: 'Password',
+                          ),
+                          const SizedBox(height: 10),
+                          CustomButton(
+                            text: 'Sign In',
+                            color: GlobalVariables.remiseBlueColor,
+                            onTap: () {
+                              if (_signInFormKey.currentState!.validate()) {
+                                signInUser();
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ListTile(
                   tileColor: auth == Auth.signup
                       ? GlobalVariables.backgroundColor
                       : GlobalVariables.greyBackgroundCOlor,
@@ -82,7 +134,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ),
                   ),
                   leading: Radio(
-                    activeColor: GlobalVariables.secondaryColor,
+                    activeColor: GlobalVariables.remiseBlueColor,
                     value: Auth.signup,
                     groupValue: auth,
                     onChanged: (Auth? val) {
@@ -117,60 +169,10 @@ class _AuthScreenState extends State<AuthScreen> {
                           const SizedBox(height: 10),
                           CustomButton(
                             text: 'Sign Up',
+                            color: GlobalVariables.remiseBlueColor,
                             onTap: () {
                               if (_signUpFormKey.currentState!.validate()) {
                                 signUpUser();
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ListTile(
-                  tileColor: auth == Auth.signin
-                      ? GlobalVariables.backgroundColor
-                      : GlobalVariables.greyBackgroundCOlor,
-                  title: const Text(
-                    'Sign-In',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  leading: Radio(
-                    activeColor: GlobalVariables.secondaryColor,
-                    value: Auth.signin,
-                    groupValue: auth,
-                    onChanged: (Auth? val) {
-                      setState(() {
-                        auth = val!;
-                      });
-                    },
-                  ),
-                ),
-                if (auth == Auth.signin)
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    color: GlobalVariables.backgroundColor,
-                    child: Form(
-                      key: _signInFormKey,
-                      child: Column(
-                        children: [
-                          CustomText(
-                            controller: _emailController,
-                            hintText: 'Email',
-                          ),
-                          const SizedBox(height: 10),
-                          CustomText(
-                            controller: _passwordController,
-                            hintText: 'Password',
-                          ),
-                          const SizedBox(height: 10),
-                          CustomButton(
-                            text: 'Sign In',
-                            onTap: () {
-                              if (_signInFormKey.currentState!.validate()) {
-                                signInUser();
                               }
                             },
                           ),

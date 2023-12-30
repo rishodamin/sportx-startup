@@ -76,6 +76,10 @@ class _CartProductState extends State<CartProduct> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    if (cartItem.size.isNotEmpty)
+                      Text(
+                        'Size: ${cartItem.size}',
+                      ),
                     const Text(
                       'Elgible for FREE Shipping',
                     ),

@@ -12,8 +12,10 @@ class TopCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 60,
+    return Container(
+      padding: const EdgeInsets.only(top: 10),
+      decoration: const BoxDecoration(gradient: GlobalVariables.appBarGradient),
+      height: 70,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: GlobalVariables.categoryImages.length,

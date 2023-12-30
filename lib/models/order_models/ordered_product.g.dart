@@ -10,7 +10,7 @@ OrderedProduct _$OrderedProductFromJson(Map<String, dynamic> json) =>
     OrderedProduct(
       product: Product.fromJson(json['product'] as Map<String, dynamic>),
       quantity: json['quantity'] as int,
-      size: json['size'] as String,
+      size: json['size'] == null ? '' : json['size'] as String,
     );
 
 Map<String, dynamic> _$OrderedProductToJson(OrderedProduct instance) =>

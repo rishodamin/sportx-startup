@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sportx/common/widgets/loader.dart';
 import 'package:sportx/common/widgets/product_card.dart';
+import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/home/services/home_services.dart';
 import 'package:sportx/features/product_details/screens/product_details_screen.dart';
 import 'package:sportx/models/product_models/product.dart';
@@ -15,6 +16,7 @@ class DealOfTheDay extends StatefulWidget {
 class _DealOfTheDayState extends State<DealOfTheDay> {
   Product? product;
   final HomeServices homeServices = HomeServices();
+  int? offer;
 
   @override
   void initState() {
@@ -24,6 +26,8 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
 
   void fetchDealOfDay() async {
     product = await homeServices.fetchDealOfDay(context: context);
+    offer = (((product!.price - product!.finalPrice) / product!.price) * 100)
+        .ceil();
     setState(() {});
   }
 
@@ -56,16 +60,81 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
-                    Productcard(
-                      imageUrl: product!.images[0],
-                      height: 235,
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          height: 255,
+                          width: 255,
+                          padding: const EdgeInsets.all(15),
+                          child: Productcard(
+                            imageUrl: product!.images[0],
+                            height: 235,
+                          ),
+                        ),
+                        const Positioned(
+                          top: -5,
+                          right: -5,
+                          child: Icon(
+                            Icons.circle,
+                            color: GlobalVariables.remiseBlueColor,
+                            size: 80,
+                          ),
+                        ),
+                        Positioned(
+                          top: 10,
+                          right: 10,
+                          child: Column(
+                            children: [
+                              Text(
+                                ' $offer%',
+                                style: const TextStyle(
+                                  color: GlobalVariables.halfWhiteColor,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const Text(
+                                'off',
+                                style: TextStyle(
+                                  color: GlobalVariables.halfWhiteColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 15),
-                      alignment: Alignment.topLeft,
-                      child: Text(
-                        '₹${product!.price}',
-                        style: const TextStyle(fontSize: 18),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Remise Deal Price: ',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '₹${product!.finalPrice}',
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.red,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            '₹${product!.price}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Container(
@@ -103,9 +172,9 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
                       padding:
                           const EdgeInsets.only(top: 15, bottom: 15, left: 15),
                       alignment: Alignment.topLeft,
-                      child: Text('View full details',
+                      child: const Text('View full details',
                           style: TextStyle(
-                            color: Colors.cyan[800],
+                            color: GlobalVariables.selectedNavBarColor,
                           )),
                     )
                   ],

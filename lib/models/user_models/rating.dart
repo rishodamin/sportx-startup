@@ -5,7 +5,7 @@ part 'rating.g.dart';
 @JsonSerializable()
 class Rating {
   final String userId;
-  final double rating;
+  double rating;
 
   Rating({
     required this.userId,

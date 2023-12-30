@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sportx/common/widgets/loader.dart';
+import 'package:sportx/common/widgets/product_card.dart';
 import 'package:sportx/constants/global_variables.dart';
 import 'package:sportx/features/account/screens/my_orders_screen.dart';
 import 'package:sportx/features/account/services/account_services.dart';
-import 'package:sportx/features/account/widgets/single_product.dart';
 import 'package:sportx/features/order_details/screens/order_details.dart';
 import 'package:sportx/models/order_models/order.dart';
 
@@ -26,6 +26,7 @@ class _OrdersState extends State<Orders> {
 
   void fetchOrders() async {
     order = await _accountServices.fetchMyOrders(context: context);
+    order = order!.reversed.toList();
     setState(() {});
   }
 
@@ -92,8 +93,10 @@ class _OrdersState extends State<Orders> {
                               },
                             );
                           },
-                          child: SingleProduct(
-                            image: order![index].products[0].product.images[0],
+                          child: Productcard(
+                            imageUrl:
+                                order![index].products[0].product.images[0],
+                            height: 170,
                           ),
                         );
                       },

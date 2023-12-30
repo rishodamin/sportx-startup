@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sportx/common/widgets/bottom_bar.dart';
 import 'package:sportx/features/account/screens/my_orders_screen.dart';
 import 'package:sportx/features/address/screens/address_screen.dart';
+import 'package:sportx/features/address/screens/payment_screen.dart';
 import 'package:sportx/features/admin/screens/add_product_screen.dart';
 import 'package:sportx/features/auth/screens/auth_screen.dart';
 import 'package:sportx/features/home/screens/category_deals_screens.dart';
@@ -65,10 +66,21 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
       );
     case AddressScreen.routeName:
-      var totalAmount = routeSettings.arguments as String;
+      var args = routeSettings.arguments as Map<String, dynamic>;
       return MaterialPageRoute(
         builder: (_) => AddressScreen(
-          amount: totalAmount,
+          amount: args['amount'],
+          imageUrl: args['imageUrl'],
+        ),
+        settings: routeSettings,
+      );
+    case PaymentScreen.routeName:
+      var args = routeSettings.arguments as Map<String, dynamic>;
+      return MaterialPageRoute(
+        builder: (_) => PaymentScreen(
+          amount: args['amount'],
+          imageUrl: args['imageUrl'],
+          address: args['address'],
         ),
         settings: routeSettings,
       );

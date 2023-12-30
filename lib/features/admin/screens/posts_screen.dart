@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sportx/common/widgets/loader.dart';
+import 'package:sportx/common/widgets/product_card.dart';
 import 'package:sportx/constants/global_variables.dart';
-import 'package:sportx/features/account/widgets/single_product.dart';
 import 'package:sportx/features/admin/screens/add_product_screen.dart';
 import 'package:sportx/features/admin/services/admin_services.dart';
 import 'package:sportx/models/product_models/product.dart';
@@ -67,9 +67,9 @@ class _PostsScreenState extends State<PostsScreen> {
                 final productData = products![index];
                 return Column(
                   children: [
-                    SizedBox(
+                    Productcard(
+                      imageUrl: productData.images[0],
                       height: 140,
-                      child: SingleProduct(image: productData.images[0]),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
